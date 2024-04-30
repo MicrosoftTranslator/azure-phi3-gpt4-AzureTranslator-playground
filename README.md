@@ -4,7 +4,7 @@
 - VS code must be installed
 - node.js and npm
 - npm install --save-dev react-dev-u
-- npm install --save @react-ui-org/react-ui
+- npm install @mui/material @emotion/react @emotion/styled
 - pip install requests dotenv json  ssl  urllib3
   
 ## .env must be added to the root directory. Content (without sub-bullet):
