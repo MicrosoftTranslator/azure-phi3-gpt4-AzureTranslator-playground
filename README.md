@@ -5,7 +5,7 @@
 - node.js and npm
 - npm install --save-dev react-dev-u
 - pip install requests dotenv json  ssl  urllib3
-- 
+  
 ## .env must be added to the root directory. Content (without sub-bullet):
 - MT_REGION=<resource region, e.g., eastus>
 - AAI_1KEYV2=<resource key, e.g., a1b1234567890123456789ca123456c7>
@@ -19,4 +19,7 @@
 2. Create 2 terminals
 3. In terminal 1: "cd .\flask-app\" and start flask "python -m flask run"
 4. In termina 2: start npm "npm start"
-5. 
+   You should see:
+   ![Landing page](flask-app/static/image/landing-page.png)
+
+#### You can type query in Ask anything and slide Azure AI Translator switch to use Azure Translator instead of Phi-3.
