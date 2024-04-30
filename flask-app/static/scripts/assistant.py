@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 import urllib.request
 import json
 import ssl
-import shelve
 import json
 
 def allowSelfSignedHttps(allowed):
