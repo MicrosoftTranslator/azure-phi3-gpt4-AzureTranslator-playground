@@ -5,6 +5,10 @@ from dotenv import load_dotenv
 import urllib.request
 import json
 import ssl
+<<<<<<< HEAD
+=======
+import json
+>>>>>>> 1501d7e09d88889c44e6c16af40534cf5c329dd4
 
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
