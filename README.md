@@ -23,4 +23,8 @@
    You should see:
    ![Landing page](flask-app/static/image/landing-page.png)
 
-#### You can type query in Ask anything and slide Azure AI Translator switch to use Azure Translator instead of Phi-3.
+#### You can:
+1. Type query in Ask anything.
+2. Use slider switch for Azure AI Translator.
+3. Select deployment model (phi-3-mini-128k-instruct-2 as an example).
+4. Change query paramters.
