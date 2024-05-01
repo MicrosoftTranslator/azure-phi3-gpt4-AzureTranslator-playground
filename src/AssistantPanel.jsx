@@ -29,7 +29,7 @@ export const AssistantPanel = ({
 }) => {
   const [messages, updateMessages] = useState(undefined);
   const [currentMessage, updateCurrentChat] = useState(undefined);
-  const [selectedModel, updateModelSelection] = useState("phi-3-mini-128k-instruct-2");
+  const [selectedModel, updateModelSelection] = useState("phi-3-mini-128k-instruct-4");
   const [selectedTemperature, updateTemperature] = useState(0.8);
   const [selectedTop_p, updateTop_p] = useState(0.8);
   const [selectedTokens, updateTokens] = useState(0.8);
@@ -81,6 +81,7 @@ export const AssistantPanel = ({
 
   const setModel = (value) => {
     if (value !== selectedModel) updateModelSelection(value);
+    console.log(value);
   };
 
   const setTemperature = (value) => {
@@ -188,10 +189,10 @@ export const AssistantPanel = ({
         <div  style={{position: "absolute", top: "250px", width: "300px", left: "1735px", textAlign: "left"}}>
           <h6>Deployment</h6>
             <Select 
-              onChange={(selectedValue) => setModel(selectedValue)}
+              onChange={(e) => setModel(e.value)}
               isSearchable
               options={[
-                { label: "phi-3-mini-128k-instruct-2", value: "phi-3-mini-128k-instruct-2" },
+                { label: "phi-3-mini-128k-instruct-4", value: "phi-3-mini-128k-instruct-4" },
                 // { label: "phi-3-mini-4k-instruct-2", value: "phi-3-mini-4k-instruct-2" },
               ]}
             ></Select>

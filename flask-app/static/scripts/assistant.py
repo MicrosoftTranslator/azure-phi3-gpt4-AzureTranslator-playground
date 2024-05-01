@@ -146,18 +146,11 @@ class ChatState:
             print(prompt, tgt, ACSTranslate)
             
         data = {"input_data": {"input_string":
-                [{"role":"system", "content": "You are a professional assistant for students."},
-                {"role":"user", "content": prompt}],
+                [{"role":"user", "content": prompt}],
                 "parameters": {
-                            "top_p": parameters['top_p'],
-                            "top_k": 0.8,
-                            "stop": ["<|end|>"],
-                            "stop_sequences": ["<|end|>"],
-                            "temperature": parameters['temperature'],
-                            "max_new_tokens": parameters['max_new_tokens'],
-                            "return_full_text": "False",
-                            "repetition_penalty": 1.2,
-                            "max_length":200 
+                            "top_p": float(parameters['top_p']),
+                            "temperature": float(parameters['temperature']),
+                            "max_new_tokens": float(parameters['max_new_tokens']),
                         }
                 }
             }

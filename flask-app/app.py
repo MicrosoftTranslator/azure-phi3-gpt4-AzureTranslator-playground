@@ -1,9 +1,5 @@
 from flask import Flask, render_template, request, url_for, flash, redirect, jsonify, session
 from static.scripts.assistant import ChatState
-<<<<<<< HEAD
-
-=======
->>>>>>> 1501d7e09d88889c44e6c16af40534cf5c329dd4
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fda401cd2d098d192cc24dc19021a6e4ccb1fb895e5d5e75'
