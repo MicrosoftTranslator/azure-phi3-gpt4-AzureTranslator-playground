@@ -72,10 +72,19 @@
       line-height: 0.8;
     }
     nav a {
-      color: #d64161;
+      color: #d64160;
       font-size: 3em;
       margin-left: 50px;
       text-decoration: none;
+    }
+
+    .textbox {
+      position: absolute;
+      width: 880px;
+      height: 1%;
+      top: 350px;
+      left: 1735px;
+      text-align: left;
     }
 
     .switch1 {
@@ -83,8 +92,8 @@
       display: inline-block;
       width: 45px;
       height: 19px;
-      top: 220px;
-      left: 1670px;
+      top: 565px;
+      left: 2000px;
     }
 
     .switch1 input {
@@ -156,9 +165,7 @@
   </style>
 
   <body>
-    <div class="mt">
-      <div id="root"></div>
-    </div>
+    <div id="root"></div>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/app.js') }}"></script>

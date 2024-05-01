@@ -1,4 +1,7 @@
 import { Children, useEffect, useState } from "react";
+import { TextField } from "@mui/material";
+import Select from "react-select";
+
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
@@ -6,7 +9,6 @@ import {
   MessageList,
   Message,
   MessageInput,
-  Avatar,
 } from "@chatscope/chat-ui-kit-react";
 import {
   useChat,
@@ -24,25 +26,26 @@ import {
 export const AssistantPanel = ({
   useMT,
   toggleUseMT,
-  usePII,
-  toggleUsePII,
 }) => {
   const [messages, updateMessages] = useState(undefined);
   const [currentMessage, updateCurrentChat] = useState(undefined);
+  const [selectedModel, updateModelSelection] = useState("phi-3-mini-128k-instruct-2");
+  const [selectedTemperature, updateTemperature] = useState(0.8);
+  const [selectedTop_p, updateTop_p] = useState(0.8);
+  const [selectedTokens, updateTokens] = useState(0.8);
   const [showSpinner, setSpinner] = useState("hidden");
 
   const fetchAssistantRes = async (message) => {
     var postData = {
       prompt: message,
       useMT: useMT,
-      usePII: usePII,
-      temperature: 0.8,
-      max_new_tokens: 128,
-      top_p: 0.8,
-      deployment: "phi-3-mini-128k-instruct-2",
+      temperature: selectedTemperature,
+      max_new_tokens: selectedTokens,
+      top_p: selectedTop_p,
+      deployment: selectedModel,
     };
 
-    console.log(postData);
+    console.log("postdata...", postData);
 
     setSpinner("visible");
 
@@ -72,15 +75,25 @@ export const AssistantPanel = ({
     console.log(localStorage.getItem("useMT"));
   };
 
-  const togglePII = () => {
-    toggleUsePII(!usePII);
-    localStorage.setItem("usePII", usePII);
-    console.log(localStorage.getItem("usePII"));
+  const handleChange = (value) => {
+    if (value !== currentMessage) updateCurrentChat(value);
   };
 
-  const handleChange = (value) => {
-    //enable spinner
-    if (value !== currentMessage) updateCurrentChat(value);
+  const setModel = (value) => {
+    if (value !== selectedModel) updateModelSelection(value);
+  };
+
+  const setTemperature = (value) => {
+    if (value !== selectedTemperature) updateTemperature(value);
+  };
+
+  const setTop_p = (value) => {
+    if (value !== selectedTop_p) updateTop_p(value);
+  };
+
+  const setTokens = (value) => {
+    if (value !== selectedTokens) updateTokens(value);
+    console.log(value);
   };
 
   const handleSend = () => {
@@ -110,7 +123,10 @@ export const AssistantPanel = ({
         dir="ltr"
         style={{
           position: "relative",
-          height: "870px",
+          height: "840px",
+          width: "1300px",
+          top: "80px",
+          left: "-75px",
           textAlign: "left",
           fontFamily: "Segoe UI",
           lineHeight: "1.5",
@@ -157,7 +173,7 @@ export const AssistantPanel = ({
         <MessageInput
           style={{
             height: "60px",
-            width: "80%",
+            width: "100%",
             marginLeft: "0",
             marginTop: "5px",
           }}
@@ -167,6 +183,27 @@ export const AssistantPanel = ({
           attachButton={false}
           placeholder="Ask anything (Shift + Enter for new line)"
         />
+      </div>
+      <div>
+        <div  style={{position: "absolute", top: "250px", width: "300px", left: "1735px", textAlign: "left"}}>
+          <h6>Deployment</h6>
+            <Select 
+              onChange={(selectedValue) => setModel(selectedValue)}
+              isSearchable
+              options={[
+                { label: "phi-3-mini-128k-instruct-2", value: "phi-3-mini-128k-instruct-2" },
+                // { label: "phi-3-mini-4k-instruct-2", value: "phi-3-mini-4k-instruct-2" },
+              ]}
+            ></Select>
+        </div>
+        <div class="textbox" >
+          <h6>Parameters</h6>
+          <TextField required label="temperature" defaultValue="0.8" size="small" onChange={(e) => setTemperature(e.target.value)}/>
+          <br/><br/>
+          <TextField required label="top_p" defaultValue="0.8" size="small" onChange={(e) => setTop_p(e.target.value)}/>
+          <br/><br/>
+          <TextField required label="max_new_tokens" defaultValue="128" size="small" onChange={(e) => setTokens(e.target.value)}/>
+        </div>
       </div>
       <label class="switch1">
         <input type="checkbox" onChange={toggleMT} checked={useMT} />
