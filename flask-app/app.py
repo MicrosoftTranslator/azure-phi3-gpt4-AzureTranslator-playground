@@ -32,18 +32,18 @@ def new_query():
         direction = newQuery['direction'],
     ))
     
-    # if len(newQuery['content']) != 0:
-    # # time.sleep(10)
-    #     print(f"inside new_query({newQuery} {request.json['useMT']})")
-    #     result = assistantState.process_prompt("Yabin", "user_1", newQuery['content'], request.json['useMT'], parameters)
+    if len(newQuery['content']) != 0:
+    # time.sleep(10)
+        print(f"inside new_query({newQuery} {request.json['useMT']})")
+        result = assistantState.process_prompt("Yabin", "user_1", newQuery['content'], request.json['useMT'], parameters)
 
-    #     store_message(dict(
-    #         id = id,
-    #         content = result.copy(),
-    #         contentType = newQuery['contentType'],
-    #         senderId = newQuery['senderId'],
-    #         direction = 'incoming',
-    #     ))
+        store_message(dict(
+            id = id,
+            content = result.copy(),
+            contentType = newQuery['contentType'],
+            senderId = newQuery['senderId'],
+            direction = 'incoming',
+        ))
 
         
     #print(f"inside new_query({newQuery} {request.json['useMT']})")
