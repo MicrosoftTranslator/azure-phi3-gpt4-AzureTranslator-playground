@@ -5,6 +5,7 @@
 - node.js and npm
 - npm install --save-dev react-dev-u
 - npm install @mui/material @emotion/react @emotion/styled
+- npm install react-select
 - pip install requests dotenv json  ssl  urllib3
   
 ## .env must be added to the root directory. Content (without sub-bullet):
@@ -23,4 +24,8 @@
    You should see:
    ![Landing page](flask-app/static/image/landing-page.png)
 
-#### You can type query in Ask anything and slide Azure AI Translator switch to use Azure Translator instead of Phi-3.
+#### You can:
+1. Type query in Ask anything.
+2. Use slider switch for Azure AI Translator.
+3. Select deployment model (phi-3-mini-128k-instruct-2 as an example).
+4. Change query paramters.
