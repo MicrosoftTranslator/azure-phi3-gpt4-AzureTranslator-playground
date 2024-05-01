@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 import urllib.request
 import json
 import ssl
-import shelve
-import json
 
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
@@ -131,7 +129,7 @@ class ChatState:
     process_prompt
     
     '''
-    def process_prompt(self, name, user_id, query: str, ACSTranslate: bool, ACSPii: bool, parameters: dict):
+    def process_prompt(self, name, user_id, query: str, ACSTranslate: bool, parameters: dict):
         # Customer selection sets it
         ai_results = ['Powered by Azure AI Translator...\n\n']
         

@@ -1,8 +1,5 @@
 from flask import Flask, render_template, request, url_for, flash, redirect, jsonify, session
-import requests
 from static.scripts.assistant import ChatState
-import torch
-# print(f"cuda: {torch.cuda.is_available()}")
 
 
 app = Flask(__name__)
@@ -32,18 +29,18 @@ def new_query():
         direction = newQuery['direction'],
     ))
     
-    if len(newQuery['content']) != 0:
-    # time.sleep(10)
-        print(f"inside new_query({newQuery} {request.json['useMT']} {request.json['usePII']})")
-        result = assistantState.process_prompt("Yabin", "user_1", newQuery['content'], request.json['useMT'], request.json['usePII'], parameters)
+    # if len(newQuery['content']) != 0:
+    # # time.sleep(10)
+    #     print(f"inside new_query({newQuery} {request.json['useMT']})")
+    #     result = assistantState.process_prompt("Yabin", "user_1", newQuery['content'], request.json['useMT'], parameters)
 
-        store_message(dict(
-            id = id,
-            content = result.copy(),
-            contentType = newQuery['contentType'],
-            senderId = newQuery['senderId'],
-            direction = 'incoming',
-        ))
+    #     store_message(dict(
+    #         id = id,
+    #         content = result.copy(),
+    #         contentType = newQuery['contentType'],
+    #         senderId = newQuery['senderId'],
+    #         direction = 'incoming',
+    #     ))
 
         
     #print(f"inside new_query({newQuery} {request.json['useMT']})")
