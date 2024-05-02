@@ -23,16 +23,15 @@ import {
 
 // import { Spinner } from "@nextui-org/spinner";
 
-export const AssistantPanel = ({
-  useMT,
-  toggleUseMT,
-}) => {
+export const AssistantPanel = ({ useMT, toggleUseMT }) => {
   const [messages, updateMessages] = useState(undefined);
   const [currentMessage, updateCurrentChat] = useState(undefined);
-  const [selectedModel, updateModelSelection] = useState("phi-3-mini-128k-instruct-4");
+  const [selectedModel, updateModelSelection] = useState(
+    "phi-3-mini-128k-instruct-4"
+  );
   const [selectedTemperature, updateTemperature] = useState(0.8);
   const [selectedTop_p, updateTop_p] = useState(0.8);
-  const [selectedTokens, updateTokens] = useState(0.8);
+  const [selectedTokens, updateTokens] = useState(2000);
   const [showSpinner, setSpinner] = useState("hidden");
 
   const fetchAssistantRes = async (message) => {
@@ -120,96 +119,148 @@ export const AssistantPanel = ({
 
   return (
     <div>
-      <div
-        dir="ltr"
-        style={{
-          position: "relative",
-          height: "840px",
-          width: "1300px",
-          top: "80px",
-          left: "-75px",
-          textAlign: "left",
-          fontFamily: "Segoe UI",
-          lineHeight: "1.5",
-        }}
-      >
-        <MainContainer>
-          <ChatContainer>
-            <MessageList>
-              {messages ? (
-                messages.map((message) => (
-                  <div>
-                    <Message
-                      key={message.id}
-                      model={{
-                        message: message.content,
-                        id: message.id,
-                        direction: message.direction,
-                        sentTime: "just now",
-                        position: "normal",
+      <table>
+        <tr >
+          <td style={{paddingLeft: "30px"}}>
+            <div
+              dir="ltr"
+              style={{
+                position: "relative",
+                height: "840px",
+                width: "1300px",
+                top: "0px",
+                left: "0px",
+                textAlign: "left",
+                fontFamily: "Segoe UI",
+                lineHeight: "1.5",
+              }}
+            >
+              <MainContainer>
+                <ChatContainer>
+                  <MessageList>
+                    {messages ? (
+                      messages.map((message) => (
+                        <div>
+                          <Message
+                            key={message.id}
+                            model={{
+                              message: message.content,
+                              id: message.id,
+                              direction: message.direction,
+                              sentTime: "just now",
+                              position: "normal",
+                            }}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <div style={{ visibility: "hidden" }}></div>
+                    )}
+                    <div
+                      class="circle"
+                      id="spinnerID"
+                      style={{ visibility: showSpinner }}
+                    ></div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        textAlign: "center",
+                        visibility: showSpinner,
                       }}
-                    />
-                  </div>
-                ))
-              ) : (
-                <div style={{ visibility: "hidden" }}></div>
-              )}
-              <div
-                class="circle"
-                id="spinnerID"
-                style={{ visibility: showSpinner }}
-              ></div>
-              <div
+                    >
+                      Generating response
+                    </div>
+                  </MessageList>
+                </ChatContainer>
+              </MainContainer>
+              <MessageInput
                 style={{
-                  fontSize: 12,
-                  textAlign: "center",
-                  visibility: showSpinner,
+                  height: "60px",
+                  width: "100%",
+                  marginLeft: "0",
+                  marginTop: "5px",
                 }}
-              >
-                Generating response
+                value={currentMessage}
+                onChange={handleChange}
+                onSend={() => handleSend()}
+                attachButton={false}
+                placeholder="Ask anything (Shift + Enter for new line)"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <div class="deployment">
+                <h6>Deployment</h6>
+                <Select
+                  onChange={(e) => setModel(e.value)}
+                  isSearchable
+                  options={[
+                    {
+                      label: "Chat: phi-3-mini-4k",
+                      value: "phi-3-mini-4k-instruct-4",
+                    },
+                    { label: "Assistant: gpt-4", value: "moelghaz-gpt-4" },
+                  ]}
+                ></Select>
               </div>
-            </MessageList>
-          </ChatContainer>
-        </MainContainer>
-        <MessageInput
-          style={{
-            height: "60px",
-            width: "100%",
-            marginLeft: "0",
-            marginTop: "5px",
-          }}
-          value={currentMessage}
-          onChange={handleChange}
-          onSend={() => handleSend()}
-          attachButton={false}
-          placeholder="Ask anything (Shift + Enter for new line)"
-        />
-      </div>
-      <div>
-        <div  style={{position: "absolute", top: "250px", width: "300px", left: "1735px", textAlign: "left"}}>
-          <h6>Deployment</h6>
-            <Select 
-              onChange={(e) => setModel(e.value)}
-              isSearchable
-              options={[
-                { label: "phi-3-mini-128k-instruct-4", value: "phi-3-mini-128k-instruct-4" },
-                // { label: "phi-3-mini-4k-instruct-2", value: "phi-3-mini-4k-instruct-2" },
-              ]}
-            ></Select>
-        </div>
-        <div class="textbox" >
-          <h6>Parameters</h6>
-          <TextField required label="temperature" defaultValue="0.8" size="small" onChange={(e) => setTemperature(e.target.value)}/>
-          <br/><br/>
-          <TextField required label="top_p" defaultValue="0.8" size="small" onChange={(e) => setTop_p(e.target.value)}/>
-          <br/><br/>
-          <TextField required label="max_new_tokens" defaultValue="128" size="small" onChange={(e) => setTokens(e.target.value)}/>
-        </div>
-      </div>
-      <label class="switch1">
-        <input type="checkbox" onChange={toggleMT} checked={useMT} />
-        <div class="slider round"></div>
-      </label>
+              <br />
+              <br />
+              <br />
+              <br />
+              <div class="textbox">
+                <h6>Parameters</h6>
+                <TextField
+                  required
+                  label="temperature"
+                  defaultValue="0.8"
+                  size="small"
+                  onChange={(e) => setTemperature(e.target.value)}
+                />
+                <br />
+                <br />
+                <TextField
+                  required
+                  label="top_p"
+                  defaultValue="0.8"
+                  size="small"
+                  onChange={(e) => setTop_p(e.target.value)}
+                />
+                <br />
+                <br />
+                <TextField
+                  required
+                  label="max_new_tokens"
+                  defaultValue="2000"
+                  size="small"
+                  onChange={(e) => setTokens(e.target.value)}
+                />
+              </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <table >
+              <tr>
+                <td style={{textAlign: "right",  paddingLeft: "35px"}}>
+                  <h6>Azure AI Translator</h6>
+                </td>
+                <td>
+                  <label class="switch1">
+                    <input
+                      type="checkbox"
+                      onChange={toggleMT}
+                      checked={useMT}
+                    />
+                    <div class="slider round"></div>
+                  </label>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
     </div>
   );
 };

@@ -58,42 +58,39 @@
       }
     }
 
-    body {
-      background-image: url("/static/image/AIStudio_Playground.png");
-      background-repeat: no-repeat;
-    }
     .mt {
-      position: absolute;
-      width: 1300px;
-      height: 900px;
-      left: 350px;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      left: 0px;
       margin-left: 0;
-      top: 300px;
+      top: 0px;
       line-height: 0.8;
     }
-    nav a {
-      color: #d64160;
-      font-size: 3em;
-      margin-left: 50px;
-      text-decoration: none;
+    .deployment {
+      position: relative;
+      top: 0px;
+      width: 300px;
+      height: 100%;
+      left: 10%;
+      text-align: left;
     }
-
     .textbox {
-      position: absolute;
-      width: 880px;
-      height: 1%;
-      top: 350px;
-      left: 1735px;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      top: 10%;
+      left: 10%;
       text-align: left;
     }
 
     .switch1 {
-      position: absolute;
+      position: relative;
       display: inline-block;
       width: 45px;
       height: 19px;
-      top: 565px;
-      left: 2000px;
+      top: 1px;
+      left: 100px;
     }
 
     .switch1 input {
@@ -165,7 +162,17 @@
   </style>
 
   <body>
-    <div id="root"></div>
+    <div class="mt">
+      <div style="margin-left: 30px">
+        <br/>
+        <h3>Microsoft (c) - Azure Gen-AI Playground</h3>
+        <h5>
+          Chat with Phi-3-mini framework, Assistant agent with GPT-4 and
+          Translate with Azure AI Translator
+        </h5>
+      </div>
+      <div id="root"></div>
+    </div>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/app.js') }}"></script>

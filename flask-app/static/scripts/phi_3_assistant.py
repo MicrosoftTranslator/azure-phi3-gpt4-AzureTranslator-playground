@@ -13,11 +13,11 @@ def allowSelfSignedHttps(allowed):
 
 allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
 
-isDebug = False
+isDebug = True
 
 
 # ### Handle state
-class ChatState:
+class PhiChatState:
     def __init__(self):
         self.should_cleanup: bool = False
 
@@ -31,6 +31,12 @@ class ChatState:
         self.mt_base = "" 
         self.phi_3_key = "" 
         self.phi_3_endpoint = "" 
+
+        self.load_env_variables('../.env')
+    
+    def print(self, text: str):
+        if isDebug:
+            print(text)
 
     '''
     load_env_variables
@@ -81,8 +87,7 @@ class ChatState:
         translation = response[0]["translations"][0]["text"]
         srcLID = response[0]["detectedLanguage"]["language"]
         
-        if isDebug:
-            print(response[0])
+        self.print(response[0])
             
         # Return the translation and source LID
         return translation, srcLID
@@ -101,8 +106,7 @@ class ChatState:
         
         prompt, srcLID = self.translate(self.ai_messages, tgt, self.ai_category)
         
-        if isDebug:
-            print(f"inside get_target_language()...\n {prompt} {txt} {tgt}")
+        self.print(f"inside get_target_language()...\n {prompt} {txt} {tgt}")
         
         if (prompt.lower().find('translate')) != -1:
             if prompt.lower().find('french') != -1:
@@ -120,8 +124,7 @@ class ChatState:
         else:
             tgt = srcLID
 
-        if isDebug:
-            print(f"inside get_target_language()...\n {query[0]} {txt} {tgt} srcLID {srcLID}")
+        self.print(f"inside get_target_language()...\n {query[0]} {txt} {tgt} srcLID {srcLID}")
 
         return prompt, tgt
     
@@ -131,7 +134,7 @@ class ChatState:
     '''
     def process_prompt(self, name, user_id, query: str, ACSTranslate: bool, parameters: dict):
         # Customer selection sets it
-        ai_results = ['Powered by Azure AI Translator...\n\n']
+        self.ai_results = ['Powered by Azure AI Translator...\n\n']
         
         self.ai_messages.clear()
         
@@ -142,8 +145,7 @@ class ChatState:
         if ACSTranslate:  #send query in English
             prompt, tgt = self.get_target_language(query)
 
-        if isDebug:
-            print(prompt, tgt, ACSTranslate)
+        self.print(f"{prompt}, {tgt}, {ACSTranslate}")
             
         data = {"input_data": {"input_string":
                 [{"role":"user", "content": prompt}],
@@ -157,8 +159,7 @@ class ChatState:
 
         body = str.encode(json.dumps(data))      
 
-        if isDebug:
-            print(f"processing ...({body})...")
+        self.print(f"processing ...({body})...")
 
         if not self.phi_3_key:
             raise Exception("A key should be provided to invoke the endpoint")
@@ -169,8 +170,7 @@ class ChatState:
 
         req = urllib.request.Request(self.phi_3_endpoint, body, headers)
         
-        if isDebug:
-           print(f"Request ...({req})...({self.phi_3_endpoint})")
+        self.print(f"Request ...({req})...({self.phi_3_endpoint})")
 
         try:
             response = urllib.request.urlopen(req)
@@ -178,14 +178,13 @@ class ChatState:
             result = response.read()
             
             dictStr = dict(json.loads(result))
-            if isDebug:
-                print(dictStr["output"])
+            self.print(dictStr["output"])
                 
             self.add_item(dictStr["output"])
 
             if ACSTranslate:
-                ai_results.append("{0}".format(self.translate(self.ai_messages, tgt, self.ai_category)[0]))
-                return ai_results
+                self.ai_results.append("{0}".format(self.translate(self.ai_messages, tgt, self.ai_category)[0]))
+                return self.ai_results
 
 
         except urllib.error.HTTPError as error:
@@ -195,7 +194,6 @@ class ChatState:
             print(error.info())
             print(error.read().decode("utf8", 'ignore'))   
             
-        if isDebug:
-            print(f"inside process_prompt()\n {self.ai_messages}")
+        self.print(f"inside process_prompt()\n {self.ai_messages}")
             
         return self.ai_messages    
