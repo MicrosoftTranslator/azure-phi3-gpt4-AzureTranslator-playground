@@ -11,7 +11,7 @@ from openai import AzureOpenAI
 from openai.types import FileObject
 from openai.types.beta import Thread
 from openai.types.beta.threads import Run
-from openai.types.beta.threads.messages import MessageFile
+#from openai.types.beta.threads.messages import MessageFile
 
 import shelve
 import json
@@ -23,7 +23,7 @@ def allowSelfSignedHttps(allowed):
 
 allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
 
-isDebug = True
+isDebug = False
 
 class GptChatState:
     def __init__(self):
@@ -338,7 +338,7 @@ class GptChatState:
             
                 if ACSTranslate:
                     self.ai_results.append("Powered by Azure AI Translator...\n\n{0}".format(self.translate(self.ai_messages, tgt, self.ai_category)[0]))
-                    return self.ai_results[0]
+                    return self.ai_results
                 else:
                     # for text in ai_messages:
                     #     msg += text+"\n"

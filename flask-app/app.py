@@ -40,7 +40,7 @@ def new_query():
 
         store_message(dict(
             id = id,
-            content = result.copy(),
+            content = result,
             contentType = newQuery['contentType'],
             senderId = newQuery['senderId'],
             direction = 'incoming',

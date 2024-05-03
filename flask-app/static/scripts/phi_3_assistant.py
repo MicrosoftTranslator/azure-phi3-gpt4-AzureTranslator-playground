@@ -13,7 +13,7 @@ def allowSelfSignedHttps(allowed):
 
 allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
 
-isDebug = True
+isDebug = False
 
 
 # ### Handle state
