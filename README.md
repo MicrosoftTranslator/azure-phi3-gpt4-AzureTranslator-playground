@@ -2,6 +2,7 @@
 
 ## Requirements
 - VS code must be installed
+- [recommended] python -m venv ./my_venv
 - node.js and npm
 - npm install --save-dev react-dev-u
 - npm install @mui/material @emotion/react @emotion/styled
@@ -16,6 +17,12 @@
 - MT_BASE_URL=https://resource-name.cognitiveservices.azure.com/translator/text/v3.0
 - PHI_3_URL=phi-3-model-deployment-endpoint
 - PHI_3_KEY=phi-3-deployment-key
+- AOAI_URI=https://resource-namet-pilot.openai.azure.com/
+- AOAI_BASE_URL=https://resource-name.openai.azure.com/openai
+- AOAI_KEY=<resource key, e.g., a1b1234567890123456789ca123456c7>
+- AOAI_VERSION=2024-02-15-preview
+- AOAI_GPT_DEPLOYMENT=moelghaz-gpt-4
+- AOAI_GPT_ASSISTANT=<assistant-id, e.g., asst_9v7TP8yAUeFSgL345npccEmr>
 
 ## Launch the app
 1. Start VS code and open the app folder from "File" tab
