@@ -236,7 +236,7 @@ export const AssistantPanel = ({ useMT, toggleUseMT }) => {
                       label: "phi-3-mini-4k-instruct-4",
                       value: "phi-3-mini-4k-instruct-4",
                     },
-                    { label: "gpt-4", value: "moelghaz-gpt-4" },
+                    { label: "gpt-4", value: "gpt-4-me" },
                   ]}
                 ></Select>
               </div>
