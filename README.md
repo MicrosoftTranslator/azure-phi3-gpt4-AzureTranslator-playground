@@ -20,8 +20,8 @@
 - AOAI_URI=https://resource-namet-pilot.openai.azure.com/
 - AOAI_BASE_URL=https://resource-name.openai.azure.com/openai
 - AOAI_KEY=<resource key, e.g., a1b1234567890123456789ca123456c7>
-- AOAI_VERSION=2024-02-15-preview
-- AOAI_GPT_DEPLOYMENT=moelghaz-gpt-4
+- AOAI_VERSION=<model-version, e.g., 2024-02-15-preview>
+- AOAI_GPT_DEPLOYMENT=<gpt-4-deployment-name>
 - AOAI_GPT_ASSISTANT=<assistant-id, e.g., asst_9v7TP8yAUeFSgL345npccEmr>
 
 ## Launch the app
@@ -29,11 +29,12 @@
 2. Create 2 terminals
 3. In terminal 1: "cd .\flask-app\" and start flask "python -m flask run"
 4. In termina 2: start npm "npm start"
-   You should see:
-   ![Landing page](flask-app/static/image/landing-page.png)
+   - You should see:
+   ![Landing page](flask-app/static/image/Landing-page.png)
 
 #### You can:
 1. Type query in Ask anything.
 2. Use slider switch for Azure AI Translator.
-3. Select deployment model (phi-3-mini-128k-instruct-2 as an example).
+3. Select deployment model (phi-3-mini-128k-instruct-2 as an example for chat and GPT for assistants).
 4. Change query paramters.
+5. Clear chat.
