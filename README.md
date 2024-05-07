@@ -1,4 +1,4 @@
-# Getting Started with Azure AI Chat API, Azure Translator and Phi-3
+# Getting Started with Azure AI Phi-3 Chat API, GPT-4 Assistants API and Azure Translator
 
 ## Requirements
 - VS code must be installed
