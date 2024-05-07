@@ -1,34 +1,45 @@
-import { Children, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import Select from "react-select";
 
-import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
   ChatContainer,
   MessageList,
   Message,
   MessageInput,
+  Button,
 } from "@chatscope/chat-ui-kit-react";
 import {
-  useChat,
   ChatMessage,
   MessageContentType,
   MessageDirection,
   MessageStatus,
-  MessageContent,
-  TextContent,
-  User,
 } from "@chatscope/use-chat";
+import { lightBlue } from "@mui/material/colors";
+
+const theme = {
+  blue: {
+    default: "#3f51b5",
+    hover: "#283593",
+  },
+  pink: {
+    default: "#e91e63",
+    hover: "#ad1457",
+  },
+};
+
+Button.defaultProps = {
+  theme: "blue",
+  
+};
 
 // import { Spinner } from "@nextui-org/spinner";
 
 export const AssistantPanel = ({ useMT, toggleUseMT }) => {
   const [messages, updateMessages] = useState(undefined);
   const [currentMessage, updateCurrentChat] = useState(undefined);
-  const [selectedModel, updateModelSelection] = useState(
-    "phi-3-mini-128k-instruct-4"
-  );
+  const [selectedModel, updateModelSelection] = useState(undefined);
   const [selectedTemperature, updateTemperature] = useState(0.8);
   const [selectedTop_p, updateTop_p] = useState(0.8);
   const [selectedTokens, updateTokens] = useState(2000);
@@ -56,6 +67,30 @@ export const AssistantPanel = ({ useMT, toggleUseMT }) => {
           "x-access-token": "token-value",
         },
         body: JSON.stringify(postData),
+      });
+
+      const data = await response.json();
+      updateMessages(data.messages);
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    setSpinner("hidden");
+  };
+
+  const clearChat = async () => {
+
+    setSpinner("visible");
+
+    try {
+      const response = await fetch("/clearChat", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": "token-value",
+        },
+        body: "",
       });
 
       const data = await response.json();
@@ -186,6 +221,7 @@ export const AssistantPanel = ({ useMT, toggleUseMT }) => {
                 attachButton={false}
                 placeholder="Ask anything (Shift + Enter for new line)"
               />
+              <Button theme="blue" onClick={clearChat}>Clear chat</Button>
             </div>
           </td>
           <td>
@@ -197,10 +233,10 @@ export const AssistantPanel = ({ useMT, toggleUseMT }) => {
                   isSearchable
                   options={[
                     {
-                      label: "Chat: phi-3-mini-4k",
+                      label: "phi-3-mini-4k-instruct-4",
                       value: "phi-3-mini-4k-instruct-4",
                     },
-                    { label: "Assistant: gpt-4", value: "moelghaz-gpt-4" },
+                    { label: "gpt-4", value: "moelghaz-gpt-4" },
                   ]}
                 ></Select>
               </div>
