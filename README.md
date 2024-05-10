@@ -4,11 +4,12 @@
 - VS code must be installed
 - [recommended] python -m venv ./my_venv
 - node.js and npm
-- npm install --save-dev react-dev-u
-- npm install @mui/material @emotion/react @emotion/styled
-- npm install react-select
-- pip install openai
-- pip install requests dotenv json  ssl  urllib3
+- Following is best to be run from VS Code terminal after you select the project folder. 
+  - npm install --save-dev react-dev-utils
+  - npm install @mui/material @emotion/react @emotion/styled @chatscope/chat-ui-kit-react
+  - npm install react-select
+  - pip install openai
+  - pip install requests python-dotenv json  ssl  urllib3
   
 ## .env must be added to the root directory. Content (without sub-bullet):
 - MT_REGION=<resource region, e.g., eastus>
