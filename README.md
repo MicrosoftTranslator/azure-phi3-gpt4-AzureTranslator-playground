@@ -32,3 +32,14 @@
 3. Select deployment model (phi-3-mini-128k-instruct-2 as an example for chat and GPT for assistants).
 4. Change query paramters.
 5. Clear chat.
+
+---
+**NOTE**
+
+This code supports requesting translation into French, German, Chinese, Spanish, and English. You can be modified the code to support more languages.
+
+#### Example query:
+
+What is Fermat's last theorem? Translate into French.
+
+---
