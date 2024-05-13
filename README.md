@@ -3,7 +3,7 @@
 ## Requirements
 - VS code must be installed
 - install python using https://www.python.org/downloads/release/python-3123/
-- [recommended creating virtualenv] python -m venv ./my_venv
+- [recommended: creating virtualenv] python -m venv ./my_venv
 - install node.js and npm using https://nodejs.org/dist/v22.1.0/node-v22.1.0-x64.msi
 - Following is best to be run from VS Code terminal after you select the project folder. 
   - npm install --save-dev react-dev-utils
