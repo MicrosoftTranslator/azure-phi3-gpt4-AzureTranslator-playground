@@ -140,7 +140,6 @@ class PhiChatState:
         
         prompt = query
         tgt = 'en'
-        msg = ""
         
         if ACSTranslate:  #send query in English
             prompt, tgt = self.get_target_language(query)

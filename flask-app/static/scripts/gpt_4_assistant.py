@@ -23,7 +23,7 @@ def allowSelfSignedHttps(allowed):
 
 allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
 
-isDebug = False
+isDebug = True
 
 class GptChatState:
     def __init__(self):
@@ -252,24 +252,25 @@ class GptChatState:
 
     def get_target_language(self, query):
         self.ai_messages.clear()
-        self.add_item(query[0])
-        txt = query[0]
+        self.add_item(query)
+        txt = query
         tgt = 'en'
         
         prompt, srcLID = self.translate(self.ai_messages, tgt, self.ai_category)
-        #print(f"inside get_target_language()...\n {prompt} {txt} {tgt}")
+        
+        self.print(f"inside get_target_language()...\n {prompt} {txt} {tgt}")
         
         if (prompt.lower().find('translate')) != -1:
-            if prompt.lower().find('French') != -1:
+            if prompt.lower().find('french') != -1:
                 tgt = 'fr'
                 txt = prompt.split('Translate')[0]
-            elif prompt.lower().find('German') != -1:
+            elif prompt.lower().find('german') != -1:
                 tgt = 'de'
                 txt = prompt.split('Translate')[0]
-            elif prompt.lower().find('Spanish') != -1:
+            elif prompt.lower().find('spanish') != -1:
                 tgt = 'es'
                 txt = prompt.split('Translate')[0]
-            elif prompt.lower().find('Chinese') != -1:
+            elif prompt.lower().find('chinese') != -1:
                 tgt = 'zh'
                 txt = prompt.split('Translate')[0]
         else:
@@ -277,7 +278,7 @@ class GptChatState:
 
         self.print(f"inside get_target_language()...\n {query[0]} {txt} {tgt} srcLID {srcLID}")
 
-        return txt, tgt
+        return prompt, tgt
 
     def process_prompt(self, name, user_id, query: str, ACSTranslate: bool, parameters: dict):
               
@@ -288,9 +289,10 @@ class GptChatState:
         self.ai_results = []
         prompt = query
         tgt = 'en'
-        msg = ""
 
-        if ACSTranslate and query.lower().find('translate') != -1:  #send query in English
+        self.print(prompt)
+
+        if ACSTranslate:  #send query in English
             prompt, tgt = self.get_target_language(prompt)
             self.print(f"{prompt}, {tgt}, {ACSTranslate}")
             
@@ -313,7 +315,7 @@ class GptChatState:
 
         self.client.beta.threads.messages.create(thread_id=thread.id, role="user", content=prompt)
         
-        run = self.client.beta.threads.runs.create_and_poll(
+        run = self.client.beta.threads.runs.create(
             thread_id=thread.id,
             assistant_id= self.aoai_api_gpt_assistant,
             instructions="Please address the user as Jane Doe. The user has a premium account. Be assertive, accurate, and polite. Ask if the user has further questions. Do not provide explanations for the answers."
@@ -340,9 +342,6 @@ class GptChatState:
                     self.ai_results.append("Powered by Azure AI Translator...\n\n{0}".format(self.translate(self.ai_messages, tgt, self.ai_category)[0]))
                     return self.ai_results
                 else:
-                    # for text in ai_messages:
-                    #     msg += text+"\n"
-                    # return msg
                     break
                 
             if run.status == "failed":
