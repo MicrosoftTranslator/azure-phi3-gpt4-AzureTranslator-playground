@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { Children, useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import Select from "react-select";
 
+import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
   ChatContainer,
@@ -11,10 +12,14 @@ import {
   Button,
 } from "@chatscope/chat-ui-kit-react";
 import {
+  useChat,
   ChatMessage,
   MessageContentType,
   MessageDirection,
   MessageStatus,
+  MessageContent,
+  TextContent,
+  User,
 } from "@chatscope/use-chat";
 import { lightBlue } from "@mui/material/colors";
 
@@ -233,10 +238,10 @@ export const AssistantPanel = ({ useMT, toggleUseMT }) => {
                   isSearchable
                   options={[
                     {
-                      label: "phi-3-mini-4k-instruct-4",
-                      value: "phi-3-mini-4k-instruct-4",
+                      label: "phi-3-mini-4k-instruct",
+                      value: "phi-3-mini-4k-instruct-5",
                     },
-                    { label: "gpt-4", value: "gpt-4-me" },
+                    { label: "GPT-4", value: "gpt-4-melghaz" },
                   ]}
                 ></Select>
               </div>
