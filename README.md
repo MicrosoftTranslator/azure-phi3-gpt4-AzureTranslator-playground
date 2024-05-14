@@ -26,7 +26,7 @@ This is a lightweight python project to demonistrate how-to
 ## Launch the app
 1. Start VS code and open the app folder from "File" tab
 2. Create 2 terminals
-3. In terminal 1 run and wait: python -m uvicorn app:app  --port 5000 --reload
+3. In terminal 1 run: python -m uvicorn app:app  --port 5000 --reload
    - Wait for Application startup complete.
 4. In terminal 2 run: npm start
    - You should see:
