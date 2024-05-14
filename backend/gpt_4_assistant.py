@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, url_for, flash, redirect, jsonify, session
 import os
 import requests
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import io
 import time
 from datetime import datetime
@@ -11,7 +10,6 @@ from openai import AzureOpenAI
 from openai.types import FileObject
 from openai.types.beta import Thread
 from openai.types.beta.threads import Run
-#from openai.types.beta.threads.messages import MessageFile
 
 import shelve
 import json
@@ -53,6 +51,7 @@ class GptChatState:
         
         self.load_env_variables('../.env')
         
+        # print(f"inside GptChatState()..*..\n {self.aoai_api_endpoint} {self.aoai_api_key} {self.aoai_api_version}")
         self.client = AzureOpenAI(
             api_key=self.aoai_api_key,  
             api_version=self.aoai_api_version,
@@ -142,7 +141,8 @@ class GptChatState:
         # Send the request and get response
         request = requests.post(url, params=params, headers=headers, json=body)
         response = request.json()
-        
+        self.print(response)
+
         # Get translation
         translation = response[0]["translations"][0]["text"]
         srcLID = response[0]["detectedLanguage"]["language"]
@@ -258,6 +258,8 @@ class GptChatState:
         
         prompt, srcLID = self.translate(self.ai_messages, tgt, self.ai_category)
         
+        self.ai_messages.clear()
+
         self.print(f"inside get_target_language()...\n {prompt} {txt} {tgt}")
         
         if (prompt.lower().find('translate')) != -1:
@@ -279,7 +281,7 @@ class GptChatState:
         self.print(f"inside get_target_language()...\n {query[0]} {txt} {tgt} srcLID {srcLID}")
 
         return prompt, tgt
-
+    
     def process_prompt(self, name, user_id, query: str, ACSTranslate: bool, parameters: dict):
               
         # if self.ai_assistants == []:
@@ -289,8 +291,7 @@ class GptChatState:
         self.ai_results = []
         prompt = query
         tgt = 'en'
-
-        self.print(prompt)
+        msg = ""
 
         if ACSTranslate:  #send query in English
             prompt, tgt = self.get_target_language(prompt)
@@ -342,6 +343,9 @@ class GptChatState:
                     self.ai_results.append("Powered by Azure AI Translator...\n\n{0}".format(self.translate(self.ai_messages, tgt, self.ai_category)[0]))
                     return self.ai_results
                 else:
+                    # for text in ai_messages:
+                    #     msg += text+"\n"
+                    # return msg
                     break
                 
             if run.status == "failed":
@@ -379,7 +383,7 @@ class GptChatState:
                 
         self.print(f"inside process_prompt()\n {self.ai_messages}")
         
-        return self.ai_messages    
+        return ("{0}\n{1}".format(self.ai_messages[0], self.ai_messages[1]))    
 
     def cleanup(self, client):
         print("Deleting: ", len(self.ai_assistants), " assistants.")

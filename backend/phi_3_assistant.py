@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, flash, redirect, jsonify, session
+# from flask import render_template, request, url_for, flash, redirect, jsonify, session
 import os
 import requests
 from dotenv import load_dotenv
@@ -13,7 +13,7 @@ def allowSelfSignedHttps(allowed):
 
 allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
 
-isDebug = False
+isDebug = True
 
 
 # ### Handle state
@@ -82,7 +82,8 @@ class PhiChatState:
         # Send the request and get response
         request = requests.post(url, params=params, headers=headers, json=body)
         response = request.json()
-        
+        self.print(response)
+
         # Get translation
         translation = response[0]["translations"][0]["text"]
         srcLID = response[0]["detectedLanguage"]["language"]
@@ -106,6 +107,8 @@ class PhiChatState:
         
         prompt, srcLID = self.translate(self.ai_messages, tgt, self.ai_category)
         
+        self.ai_messages.clear()
+
         self.print(f"inside get_target_language()...\n {prompt} {txt} {tgt}")
         
         if (prompt.lower().find('translate')) != -1:
@@ -134,12 +137,13 @@ class PhiChatState:
     '''
     def process_prompt(self, name, user_id, query: str, ACSTranslate: bool, parameters: dict):
         # Customer selection sets it
-        self.ai_results = ['Powered by Azure AI Translator...\n\n']
+        self.ai_results = []
         
         self.ai_messages.clear()
         
         prompt = query
         tgt = 'en'
+        msg = ""
         
         if ACSTranslate:  #send query in English
             prompt, tgt = self.get_target_language(query)
@@ -163,8 +167,6 @@ class PhiChatState:
         if not self.phi_3_key:
             raise Exception("A key should be provided to invoke the endpoint")
 
-        # The azureml-model-deployment header will force the request to go to a specific deployment.
-        # Remove this header to have the request observe the endpoint traffic rules
         headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ self.phi_3_key), 'azureml-model-deployment': parameters['deployment'] }
 
         req = urllib.request.Request(self.phi_3_endpoint, body, headers)
@@ -182,7 +184,8 @@ class PhiChatState:
             self.add_item(dictStr["output"])
 
             if ACSTranslate:
-                self.ai_results.append("{0}".format(self.translate(self.ai_messages, tgt, self.ai_category)[0]))
+                self.ai_results.append("Powered by Azure AI Translator...\n\n{0}".format(self.translate(self.ai_messages, tgt, self.ai_category)[0]))
+
                 return self.ai_results
 
 

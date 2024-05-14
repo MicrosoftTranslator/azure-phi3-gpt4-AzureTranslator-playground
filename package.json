@@ -2,7 +2,7 @@
   "name": "multilingassistant",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000/",
+  "proxy": "http://127.0.0.1:5000",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@chatscope/chat-ui-kit-react": "^2.0.3",
@@ -11,7 +11,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fluentui/react-components": "^9.49.0",
-    "@mui/material": "^5.15.15",
+    "@mui/material": "^5.15.17",
     "@nextui-org/react": "^2.2.10",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
@@ -33,9 +33,11 @@
     "eslint": "^8.3.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
+    "express": "^4.19.2",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "http-proxy-middleware": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
@@ -147,5 +149,10 @@
   },
   "devDependencies": {
     "react-dev-utils": "^12.0.1"
-  }
+  },
+  "description": "- VS code must be installed\r - node.js and npm\r - npm install --save-dev react-dev-u\r - npm install @mui/material @emotion/react @emotion/styled\r - npm install react-select\r - pip install openai\r - pip install requests dotenv json  ssl  urllib3",
+  "main": "setupProxy.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
