@@ -8,6 +8,7 @@ This is a lightweight python project to demonistrate how-to
 4. Use fast python async calls with Quart and Uvicorn.
    
 ## Requirements
+- You created AIServices resource/project (https://ai.azure.com) and deployed GPT-4 and Phi-3-mini models. You will need this information to modify ".env_template."
 - [optional] Install VS code
 - Install node.js and npm using https://nodejs.org/dist/v22.1.0/node-v22.1.0-x64.msi
 - Clone this repo 
